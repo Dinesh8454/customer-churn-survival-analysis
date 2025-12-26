@@ -4,9 +4,13 @@ import matplotlib.pyplot as plt
 from lifelines import KaplanMeierFitter, CoxPHFitter
 
 # -----------------------------
-# App Title
+# Page Config
 # -----------------------------
-st.set_page_config(page_title="Customer Churn Survival Analysis", layout="wide")
+st.set_page_config(
+    page_title="Customer Churn Survival Analysis",
+    layout="wide"
+)
+
 st.title("📊 Customer Churn Survival Analysis")
 st.write("Survival Analysis using Kaplan–Meier Estimator and Cox Proportional Hazards Model")
 
@@ -41,7 +45,7 @@ E = df_processed["churn"]
 
 kmf.fit(T, event_observed=E, label="Customer Survival")
 
-fig1, ax1 = plt.subplots()
+fig1, ax1 = plt.subplots(figsize=(5, 3))
 kmf.plot(ax=ax1)
 ax1.set_xlabel("Tenure (Months)")
 ax1.set_ylabel("Survival Probability")
@@ -49,16 +53,14 @@ ax1.set_title("Kaplan–Meier Survival Curve")
 
 st.pyplot(fig1)
 
-st.info(
-    "This curve shows the probability of customers remaining active over time."
-)
+st.info("This curve shows the probability of customers remaining active over time.")
 
 # -----------------------------
 # Survival Curves by Contract Type
 # -----------------------------
 st.subheader("📊 Survival Curves by Contract Type")
 
-fig2, ax2 = plt.subplots()
+fig2, ax2 = plt.subplots(figsize=(5, 3))
 
 for col in ["contract_type_OneYear", "contract_type_TwoYear"]:
     if col in df_processed.columns:
@@ -112,7 +114,7 @@ try:
         show_plots=True
     )
     st.success("Assumption check completed successfully.")
-except Exception as e:
+except Exception:
     st.warning(
         "Assumption plots cannot be rendered directly in Streamlit. "
         "Run this check in Jupyter Notebook for detailed diagnostics."
